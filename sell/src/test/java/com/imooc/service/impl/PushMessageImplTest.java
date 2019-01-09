@@ -1,6 +1,5 @@
 package com.imooc.service.impl;
 
-import com.imooc.dto.OrderDTO;
 import com.imooc.service.OrderService;
 import com.imooc.service.PushMessageService;
 import org.junit.Test;
@@ -27,6 +26,7 @@ public class PushMessageImplTest {
 
     @Test
     public void orderStatus() {
-        pushMessageService.orderStatus(orderService.findOne("1545789668954254258"));
+        pushMessageService.orderStatus(
+                orderService.findOne("1545789668954254258"));
     }
 }

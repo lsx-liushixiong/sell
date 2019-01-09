@@ -1,6 +1,7 @@
 package com.imooc.aspect;
 
 import com.imooc.constant.CookieConstant;
+import com.imooc.constant.RedisConstant;
 import com.imooc.exception.SellerAuthorizeException;
 import com.imooc.utils.CookieUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -49,7 +50,7 @@ public class SellerAuthorizeAspect {
 
         //去redis里查询
         String tokenValue = redisTemplate.opsForValue().get(
-                String.format(CookieConstant.TOKEN,cookie.getValue()));
+                String.format(RedisConstant.TOKEN_PREFIX,cookie.getValue()));
         if (StringUtils.isEmpty(tokenValue)) {
             log.warn("【登录校验】Redis中查不到token");
             throw new SellerAuthorizeException();

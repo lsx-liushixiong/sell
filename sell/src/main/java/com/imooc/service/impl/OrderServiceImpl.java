@@ -15,6 +15,7 @@ import com.imooc.exception.SellException;
 import com.imooc.service.OrderService;
 import com.imooc.service.ProductService;
 import com.imooc.service.PushMessageService;
+import com.imooc.service.WebSocket;
 import com.imooc.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -46,6 +47,8 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private PushMessageService pushMessageService;
 
+    @Autowired
+    private WebSocket webSocket;
 
     /**
      * 创建订单
@@ -96,6 +99,8 @@ public class OrderServiceImpl implements OrderService {
                 .collect(Collectors.toList());
 
         productService.decreaseStock(cartDTOList);
+
+        webSocket.sendMessage(orderDTO.getOrderId());
 
         return orderDTO;
     }

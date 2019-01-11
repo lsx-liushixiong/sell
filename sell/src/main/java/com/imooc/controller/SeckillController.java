@@ -20,20 +20,18 @@ public class SeckillController {
 
     /**
      * 查询秒杀活动特价商品的信息
+     *
      * @param productId
      * @return
      */
     @GetMapping("/query/{productId}")
-    public String query(@PathVariable String productId)
-    {
+    public String query(@PathVariable String productId) {
         return seckillService.querySeckillProductInfo(productId);
     }
 
 
-
     @GetMapping("/order/{productId}")
-    public String skill(@PathVariable String productId)
-    {
+    public String skill(@PathVariable String productId) {
         log.info("@skill request, productId:" + productId);
         seckillService.orderProductMockDiffUser(productId);
         return seckillService.querySeckillProductInfo(productId);

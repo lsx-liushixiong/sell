@@ -26,11 +26,11 @@ public class SeckillServiceImpl implements SeckillService {
     /**
      * 国庆活动,皮蛋粥特价，限量100000份
      */
-    static Map<String,Integer> products;
+    static Map<String, Integer> products;
 
-    static Map<String,Integer> stock;
+    static Map<String, Integer> stock;
 
-    static Map<String,String> orders;
+    static Map<String, String> orders;
 
     static {
         products = new HashMap<>();
@@ -40,23 +40,20 @@ public class SeckillServiceImpl implements SeckillService {
         stock.put("123456", 1000000);
     }
 
-    private String queryMap(String productId)
-    {
-        return  "国庆活动，皮蛋粥特价，限量："+products.get(productId)+"份，" +
-                "还剩："+ stock.get(productId)+"份，" +
-                "该商品成功下单用户数目："+orders.size()+"人";
+    private String queryMap(String productId) {
+        return "国庆活动，皮蛋粥特价，限量：" + products.get(productId) + "份，" +
+                "还剩：" + stock.get(productId) + "份，" +
+                "该商品成功下单用户数目：" + orders.size() + "人";
     }
 
 
     @Override
-    public String querySeckillProductInfo(String productId)
-    {
+    public String querySeckillProductInfo(String productId) {
         return this.queryMap(productId);
     }
 
     @Override
-    public  void orderProductMockDiffUser(String productId)
-    {
+    public void orderProductMockDiffUser(String productId) {
         //加锁
         long time = System.currentTimeMillis() + TIMEOUT;
         if (!redisLock.lock(productId, String.valueOf(time))) {
@@ -65,13 +62,13 @@ public class SeckillServiceImpl implements SeckillService {
 
         //查询该商品，为0则活动结束
         int stockNum = stock.get(productId);
-        if(stockNum == 0) {
+        if (stockNum == 0) {
             throw new SellException(ResultEnum.STOCK_NULL);
-        }else {
+        } else {
             //下单(模拟不同用户openid不同)
             orders.put(KeyUtil.genUniqueKey(), productId);
             //减库存
-            stockNum = stockNum-1;
+            stockNum = stockNum - 1;
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {

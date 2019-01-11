@@ -42,6 +42,10 @@ public enum  ResultEnum {
     LOGIN_FAIL(25, "登录失败"),
 
     LOGOUT_SUCCESS(26, "登出成功"),
+
+    STOCK_NULL(100, "秒杀活动结束"),
+
+    TIME_OUT(101, "哎呦喂，人也太多了，换个姿势试试~~"),
     ;
 
     private Integer code;

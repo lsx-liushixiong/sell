@@ -40,7 +40,7 @@ public class CookieUtil {
     }
 
     /**
-     * 讲cookie封装成Map
+     * 将cookie封装成Map
      * @param request
      * @return
      */
